@@ -1,0 +1,1 @@
+cmd_/home/canlab/canlab_galactic/src/ws_clpe/src/canlab-co/CLPE_G_CANLAB_SDK/driver/modules.order := {   echo /home/canlab/canlab_galactic/src/ws_clpe/src/canlab-co/CLPE_G_CANLAB_SDK/driver/tegra_vnet.ko; :; } | awk '!x[$$0]++' - > /home/canlab/canlab_galactic/src/ws_clpe/src/canlab-co/CLPE_G_CANLAB_SDK/driver/modules.order

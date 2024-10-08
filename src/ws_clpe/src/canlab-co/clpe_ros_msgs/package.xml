@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format2.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>clpe_ros_msgs</name>
+  <version>0.1.0</version>
+  <description>Messages used by clpe_ros</description>
+  <license>Apache License 2.0</license>
+  <author>Teo Koon Peng</author>
+  <maintainer email="dwsun@can-lab.co.kr">Dongwoo Sun</maintainer>
+  <maintainer email="rlatae123@can-lab.co.kr">Taejung Kim</maintainer>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>rosidl_default_generators</buildtool_depend>
+
+  <test_depend>ament_lint_common</test_depend>
+
+  <member_of_group>rosidl_interface_packages</member_of_group>
+
+  <build_depend>ament_cmake</build_depend>
+  <buildtool_depend>python3-colcon-common-extensions</buildtool_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
