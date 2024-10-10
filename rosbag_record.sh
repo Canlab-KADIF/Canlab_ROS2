@@ -11,7 +11,7 @@ EOF
 read name
 
 BAG_DIR=/home/$USER/$name/
-time=_$(date +"%Y-%m-%d-%H-%M-%S")
+filename=_$(date +"%Y-%m-%d-%H-%M-%S")
 
 if [ -d ${BAG_DIR} ]; then
 	echo "ALREADY EXIST FOLDER"
@@ -24,6 +24,8 @@ cat <<EOF
 ************************************
 *                                  *
 *  SET DURATION TIME               *
+*  Must be set in seconds          *
+*  ex)335 for 5 minutes 35 seconds *
 *                                  *
 ************************************
 EOF
@@ -41,4 +43,4 @@ EOF
 
 cd ${BAG_DIR}
 
-`ros2 bag record -d $duration -a -o $time`
+`ros2 bag record -d $duration -a -o $filename`
