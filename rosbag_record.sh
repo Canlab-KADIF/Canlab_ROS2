@@ -1,36 +1,54 @@
 #!/bin/bash
 
+ROS_DIR=/opt/ros/galactic
+BAG_DIR=/home/$USER/BAG
+filename=_$(date +"%Y-%m-%d-%H-%M-%S")
+
+if [ -d ${ROS_DIR} ]; then
+	source ${ROS_DIR}/setup.bash
+else
+	echo "Abort!"
+	echo "ROS not found"
+	exit 1
+fi
+: <<'END'
 cat <<EOF
 ************************************
 *                                  *
-*  CREATE SAVE BAG FOLDER NAME     *
+*  CREATE SAVE BAG FOLDER          *
 *                                  *
 ************************************
 EOF
-
-read name
-
-BAG_DIR=/home/$USER/$name/
-filename=_$(date +"%Y-%m-%d-%H-%M-%S")
+END
+#read name
 
 if [ -d ${BAG_DIR} ]; then
-	echo "ALREADY EXIST FOLDER"
-else
-	`mkdir ${BAG_DIR}`
-	echo "CREATE FOLDER"
+	#echo "ALREADY EXIST FOLDER"
+	#echo "DELETE BAG FOLDER"
+	#echo "DELETE BAG FOLDER? (Y/N)"
+	#read delete
+	
+	#if [ $delete == "Y" -o $delete == "y" ]; then
+		rm -rf $BAG_DIR
+	#else
+	#	echo rename or move BAG FOLDER
+	#	exit 1
+	#fi
+#else
+	#`mkdir ${BAG_DIR}`
+	#echo "CREATE FOLDER"
 fi
-
+: <<'END'
 cat <<EOF
 ************************************
 *                                  *
 *  SET DURATION TIME               *
-*  Must be set in seconds          *
-*  ex)335 for 5 minutes 35 seconds *
+*  1m 30s                          *
 *                                  *
 ************************************
 EOF
 
-read duration
+#read duration
 
 cat <<EOF
 ************************************
@@ -40,7 +58,7 @@ cat <<EOF
 *                                  *
 ************************************
 EOF
+END
+#cd ${BAG_DIR}
 
-cd ${BAG_DIR}
-
-`ros2 bag record -d $duration -a -o $filename`
+`ros2 bag record -d 90 -a -o $BAG_DIR`
