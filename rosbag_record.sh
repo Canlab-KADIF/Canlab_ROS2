@@ -19,17 +19,17 @@ cat <<EOF
 *                                  *
 ************************************
 EOF
-END
+
 #read name
 
-if [ -d ${BAG_DIR} ]; then
+#if [ -d ${BAG_DIR} ]; then
 	#echo "ALREADY EXIST FOLDER"
 	#echo "DELETE BAG FOLDER"
 	#echo "DELETE BAG FOLDER? (Y/N)"
 	#read delete
 	
 	#if [ $delete == "Y" -o $delete == "y" ]; then
-		rm -rf $BAG_DIR
+	#	rm -rf $BAG_DIR
 	#else
 	#	echo rename or move BAG FOLDER
 	#	exit 1
@@ -37,8 +37,8 @@ if [ -d ${BAG_DIR} ]; then
 #else
 	#`mkdir ${BAG_DIR}`
 	#echo "CREATE FOLDER"
-fi
-: <<'END'
+#fi
+
 cat <<EOF
 ************************************
 *                                  *
@@ -59,6 +59,5 @@ cat <<EOF
 ************************************
 EOF
 END
-#cd ${BAG_DIR}
 
 `ros2 bag record -d 90 -a -o $BAG_DIR`
