@@ -11,6 +11,10 @@ else
 	echo "ROS not found"
 	exit 1
 fi
+
+// delete the folder containing existing bag files
+rm -rf $BAG_DIR
+
 : <<'END'
 cat <<EOF
 ************************************
