@@ -18,8 +18,8 @@ def generate_launch_description():
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource([get_package_share_directory('rslidar_sdk'), '/launch', '/start.py'])
         ),
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource([get_package_share_directory('canlab_listen'), '/launch', '/canlab_listener.py'])
-        ),
+        #IncludeLaunchDescription(
+        #    PythonLaunchDescriptionSource([get_package_share_directory('canlab_listen'), '/launch', '/canlab_listener.py'])
+        #),
     ])
 
