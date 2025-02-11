@@ -2,7 +2,7 @@
 
 PASSWD=1
 
-ROS_DIR=/opt/ros/galactic
+ROS_DIR=/opt/ros/humble
 ROS_WS_DIR=/home/$USER/Canlab_ROS2
 
 if [ `whoami` == "root" ]; then

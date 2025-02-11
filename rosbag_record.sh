@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ROS_DIR=/opt/ros/galactic
+ROS_DIR=/opt/ros/humble
 BAG_DIR=/home/$USER/BAG
 filename=_$(date +"%Y-%m-%d-%H-%M-%S")
 
@@ -12,7 +12,6 @@ else
 	exit 1
 fi
 
-// delete the folder containing existing bag files
 rm -rf $BAG_DIR
 
 : <<'END'
