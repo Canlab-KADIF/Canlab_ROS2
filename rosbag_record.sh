@@ -63,4 +63,4 @@ cat <<EOF
 EOF
 END
 
-`ros2 bag record -d 90 -a -o $BAG_DIR`
+`ros2 bag record -d 30 -a -o $BAG_DIR`
