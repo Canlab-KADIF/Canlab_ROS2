@@ -2,7 +2,6 @@
 
 ROS_DIR=/opt/ros/humble
 BAG_DIR=/home/$USER/BAG
-filename=_$(date +"%Y-%m-%d-%H-%M-%S")
 
 if [ -d ${ROS_DIR} ]; then
 	source ${ROS_DIR}/setup.bash
@@ -14,53 +13,4 @@ fi
 
 rm -rf $BAG_DIR
 
-: <<'END'
-cat <<EOF
-************************************
-*                                  *
-*  CREATE SAVE BAG FOLDER          *
-*                                  *
-************************************
-EOF
-
-#read name
-
-#if [ -d ${BAG_DIR} ]; then
-	#echo "ALREADY EXIST FOLDER"
-	#echo "DELETE BAG FOLDER"
-	#echo "DELETE BAG FOLDER? (Y/N)"
-	#read delete
-	
-	#if [ $delete == "Y" -o $delete == "y" ]; then
-	#	rm -rf $BAG_DIR
-	#else
-	#	echo rename or move BAG FOLDER
-	#	exit 1
-	#fi
-#else
-	#`mkdir ${BAG_DIR}`
-	#echo "CREATE FOLDER"
-#fi
-
-cat <<EOF
-************************************
-*                                  *
-*  SET DURATION TIME               *
-*  1m 30s                          *
-*                                  *
-************************************
-EOF
-
-#read duration
-
-cat <<EOF
-************************************
-*                                  *
-*  IF YOU WANT EXIT Rosbag         *
-*  Enter Ctrl + C		    *
-*                                  *
-************************************
-EOF
-END
-
-`ros2 bag record -d 30 -a -o $BAG_DIR`
+`ros2 bag record -d 30 -o $BAG_DIR /diagnostics_agg /planning/scenario_planning/trajectory /control/command/control_cmd /perception/object_recognition/objects /sensing/lidar/concatenated/pointcloud /can0_rx /can0_tx /sensing/radar/mrr /sensing/radar/srr/fr /sensing/radar/srr/fl /sensing/radar/srr/rr /sensing/radar/srr/rl /sensing/gnss/bestpos /sensing/gnss/bestutm /sensing/gnss/bestvel /sensing/gnss/insstdev /sensing/gnss/inspvax /sensing/gnss/odom /clpe/cam_0/compressed /clpe/cam_1/compressed /clpe/cam_2/compressed /clpe/cam_4/compressed /clpe/cam_5/compressed /clpe/cam_6/compressed /sensing/gnss/inspva /tf`
