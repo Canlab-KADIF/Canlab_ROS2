@@ -1,0 +1,10 @@
+float32 longitudinal_desired_cmd
+float32 aeb_desired_cmd
+bool jerkupflag
+bool jerklowflag
+bool comfortbandupflag
+bool comfortbandlowflag
+bool aeb_cmd_act
+bool longitudinal_stop_req
+uint8 longitudinal_mode_cmd
+uint8 alive_cnt_102

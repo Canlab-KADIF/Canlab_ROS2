@@ -12,12 +12,12 @@ def generate_launch_description():
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource([get_package_share_directory('clpe_ros'), '/launch', '/clpe_ros.launch.py'])
         ),
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource([get_package_share_directory('ros2_socketcan'), '/launch', '/can.launch.py'])
-        ),
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource([get_package_share_directory('rslidar_sdk'), '/launch', '/start.py'])
-        ),
+        #IncludeLaunchDescription(
+        #    PythonLaunchDescriptionSource([get_package_share_directory('ros2_socketcan'), '/launch', '/can.launch.py'])
+        #),
+        #IncludeLaunchDescription(
+        #    PythonLaunchDescriptionSource([get_package_share_directory('rslidar_sdk'), '/launch', '/start.py'])
+        #),
         #IncludeLaunchDescription(
         #    PythonLaunchDescriptionSource([get_package_share_directory('canlab_listen'), '/launch', '/canlab_listener.py'])
         #),

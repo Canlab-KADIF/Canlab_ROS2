@@ -19,6 +19,9 @@ set(MSG_FILES
   msg/BESTPOS.msg
   msg/BESTUTM.msg
   msg/BESTVEL.msg
+  msg/BESTGNSSPOS.msg
+  msg/BESTGNSSVEL.msg
+  msg/PPPPOS.msg
   msg/HEADING2.msg
   msg/INSCONFIG.msg
   msg/INSPVA.msg
@@ -27,6 +30,8 @@ set(MSG_FILES
   msg/CORRIMU.msg
   msg/IMURATECORRIMU.msg
   msg/RXSTATUS.msg
+  msg/TERRASTARSTATUS.msg
+  msg/TERRASTARINFO.msg
   msg/TIME.msg
   msg/INSExtendedSolutionStatus.msg
   msg/INSFrame.msg
@@ -34,6 +39,7 @@ set(MSG_FILES
   msg/INSResetType.msg
   msg/INSSourceStatus.msg
   msg/INSUpdate.msg
+  msg/RAWIMUSX.msg
   msg/BestExtendedSolutionStatus.msg
   msg/InertialSolutionStatus.msg
   msg/INSAlignmentMode.msg
@@ -45,6 +51,13 @@ set(MSG_FILES
   msg/SolutionSource.msg
   msg/Translation.msg
   msg/TranslationOffset.msg
+  msg/SubscriptionPermission.msg
+  msg/SubscriptionType.msg
+  msg/SyncState.msg
+  msg/RegionRestriction.msg
+  msg/LocalAreaStatus.msg
+  msg/AccessStatus.msg
+  msg/GeogatingStatus.msg
 )
 
 rosidl_generate_interfaces(${PROJECT_NAME}

@@ -1,0 +1,4 @@
+uint8 turn_signal_cmd
+bool turn_hazard_cmd
+uint8 turn_mode_cmd
+uint8 alive_cnt_105

@@ -1,0 +1,3 @@
+float32 lateral_steer_ang_cmd
+uint8 lateral_mode_cmd
+uint8 alive_cnt_103

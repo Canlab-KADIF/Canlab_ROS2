@@ -1,0 +1,3 @@
+uint8 gear_position_cmd
+uint8 gear_mode_cmd
+uint8 alive_cnt_104

@@ -1,0 +1,4 @@
+float32 tire_angle
+float32 ratio
+float32 yaw_rate
+float32 steer_angle
