@@ -32,6 +32,14 @@ target_link_libraries(${PROJECT_NAME}_lib INTERFACE
   ${cv_bridge_LIBRARIES}
   ${clpe_ros_msgs_LIBRARIES}
 )
+
+ament_target_dependencies(${PROJECT_NAME}_lib INTERFACE
+  "rclcpp"
+  "cv_bridge"
+  "tf2"
+  "image_transport")
+
+
 target_compile_features(${PROJECT_NAME}_lib INTERFACE cxx_std_14)
 add_executable(${PROJECT_NAME}
   src/main.cpp)

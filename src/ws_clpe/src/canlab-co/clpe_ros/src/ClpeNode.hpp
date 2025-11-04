@@ -444,6 +444,7 @@ private:
   {
     image.header.frame_id = frame_id;
     image.format = "jpeg";
+    image.header.stamp = stamp;
     image.data.resize(size);
     std::copy(buffer, (buffer) + (size), image.data.begin());
   }

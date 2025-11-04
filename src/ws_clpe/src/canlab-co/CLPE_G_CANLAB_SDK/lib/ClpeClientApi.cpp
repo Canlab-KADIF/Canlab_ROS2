@@ -84,27 +84,27 @@ int ClpeClientApi::Clpe_CheckConnect(string password, int settingValue)
 
 	if(settingValue == 0)
 	{
-		ethDev = "eth0";
-		ethDevOther = "eth1";
+		ethDev = "enp1s0";
+		ethDevOther = "enp9s0";
 		pcIpAddress = " 192.168.7.8";
 		xavierNxIpAddress = "192.168.7.7";	
 	}
 	else if(settingValue == 1)
 	{
-		ethDev = "eth1";
-		ethDevOther = "eth0";
+		ethDev = "enp9s0";
+		ethDevOther = "enp1s0";
 		pcIpAddress = " 192.168.7.8";
 		xavierNxIpAddress = "192.168.7.7";	
 	}
 	else if(settingValue == 2)
 	{
-		ethDev = "eth1";
+		ethDev = "enp9s0";
 		pcIpAddress = " 192.168.8.8";
 		xavierNxIpAddress = "192.168.8.7";	
 	}
 	else
 	{
-		ethDev = "eth0";
+		ethDev = "enp1s0";
 		pcIpAddress = " 192.168.8.8";
 		xavierNxIpAddress = "192.168.8.7";	
 	}
@@ -692,7 +692,7 @@ int ClpeClientApi::Clpe_CheckNetwork()
 {
 	int ret = 0;
 
-	ret = system("ifconfig | grep eth0 | grep 'mtu 64512' > /dev/null 2>&1");
+	ret = system("ifconfig | grep enp1s0 | grep 'mtu 64512' > /dev/null 2>&1");
 
 	if(ret != 0)
 	{
@@ -701,7 +701,7 @@ int ClpeClientApi::Clpe_CheckNetwork()
 
 	if(m_isAttachedSlave == 1)
 	{
-		ret = system("ifconfig | grep eth1 | grep 'mtu 64512' > /dev/null 2>&1");
+		ret = system("ifconfig | grep enp9s0 | grep 'mtu 64512' > /dev/null 2>&1");
 		if(ret != 0)
 		{
 			return ERROR_CHECK_CONNECT;

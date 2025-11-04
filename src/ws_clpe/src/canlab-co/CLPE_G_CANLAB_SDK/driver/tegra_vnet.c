@@ -1,5 +1,6 @@
-/*
- * Copyright (c) 2019-2022, NVIDIA CORPORATION.  All rights reserved.
+// SPDX-License-Identifier: GPL-2.0
+/* SPDX-FileCopyrightText: Copyright (c) 2019-2024 NVIDIA CORPORATION & AFFILIATES.
+ * All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms and conditions of the GNU General Public License,
@@ -9,6 +10,9 @@
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
  * more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include <linux/aer.h>
@@ -17,12 +21,6 @@
 #include <linux/netdevice.h>
 #include <linux/pci.h>
 #include "tegra_vnet.h"
-
-#ifndef mmiowb
-#define mmiowb() do {} while (0)
-#endif
-
-#define PCI_DEVICE_ID_NVIDIA_JETSON_AGX_NETWORK 0x2296
 
 struct tvnet_priv {
 	struct net_device *ndev;
@@ -183,6 +181,11 @@ static void tvnet_host_alloc_empty_buffers(struct tvnet_priv *tvnet)
 			break;
 		}
 
+		/* The PCIe link is stable and dependable,
+		 * so it's not necessary to perform a software checksum.
+		 */
+		skb->ip_summed = CHECKSUM_UNNECESSARY;
+
 		ep2h_empty_ptr = kmalloc(sizeof(*ep2h_empty_ptr), GFP_ATOMIC);
 		if (!ep2h_empty_ptr) {
 			dma_unmap_single(d, iova, len, DMA_FROM_DEVICE);
@@ -290,7 +293,7 @@ static void tvnet_host_update_link_sm(struct tvnet_priv *tvnet)
 /* One way link state machine*/
 static void tvnet_host_user_link_up_req(struct tvnet_priv *tvnet)
 {
-	struct ctrl_msg msg;
+	struct ctrl_msg msg = {};
 
 	tvnet_host_clear_data_msg_counters(tvnet);
 	tvnet_host_alloc_empty_buffers(tvnet);
@@ -302,7 +305,7 @@ static void tvnet_host_user_link_up_req(struct tvnet_priv *tvnet)
 
 static void tvnet_host_user_link_down_req(struct tvnet_priv *tvnet)
 {
-	struct ctrl_msg msg;
+	struct ctrl_msg msg = {};
 
 	tvnet->rx_link_state = DIR_LINK_STATE_SENT_DOWN;
 	msg.msg_id = CTRL_MSG_LINK_DOWN;
@@ -318,7 +321,7 @@ static void tvnet_host_rcv_link_up_msg(struct tvnet_priv *tvnet)
 
 static void tvnet_host_rcv_link_down_msg(struct tvnet_priv *tvnet)
 {
-	struct ctrl_msg msg;
+	struct ctrl_msg msg = {};
 
 	/* Stop using empty buffers of remote system */
 	tvnet_host_stop_tx_queue(tvnet);
@@ -651,16 +654,18 @@ static int tvnet_host_process_ep2h_msg(struct tvnet_priv *tvnet)
 		list_for_each_entry(ep2h_empty_ptr, &tvnet->ep2h_empty_list,
 				    list) {
 			if (ep2h_empty_ptr->iova == pcie_address) {
+				list_del(&ep2h_empty_ptr->list);
 				found = 1;
 				break;
 			}
 		}
-		WARN_ON(!found);
-		list_del(&ep2h_empty_ptr->list);
 		spin_unlock_irqrestore(&tvnet->ep2h_empty_lock, flags);
 
 		/* Advance H2EP full buffer after search in local list */
 		tvnet_ivc_advance_rd(&tvnet->ep2h_full);
+		if (WARN_ON(!found))
+			continue;
+
 		/* If EP2H network queue is stopped due to lack of EP2H_FULL
 		 * queue, raising ctrl irq will help.
 		 */
@@ -761,7 +766,9 @@ static int tvnet_host_probe(struct pci_dev *pdev,
 		goto free_netdev;
 	}
 
+#if defined(NV_PCI_ENABLE_PCIE_ERROR_REPORTING_PRESENT) /* Linux 6.5 */
 	pci_enable_pcie_error_reporting(pdev);
+#endif
 
 	/*
 	 * In CPU memory write case, skb->data buffer is copied to dst in BAR.
@@ -806,8 +813,9 @@ static int tvnet_host_probe(struct pci_dev *pdev,
 	/* Setup BAR0 meta data */
 	tvnet_host_setup_bar0_md(tvnet);
 
-	netif_napi_add(ndev, &tvnet->napi, tvnet_host_poll, TVNET_NAPI_WEIGHT);
-
+        /* Linux v6.1 */
+	netif_napi_add_weight(ndev, &tvnet->napi, tvnet_host_poll, TVNET_NAPI_WEIGHT);
+	
 	ndev->mtu = TVNET_DEFAULT_MTU;
 
 	ret = register_netdev(ndev);
@@ -829,7 +837,7 @@ static int tvnet_host_probe(struct pci_dev *pdev,
 
 	INIT_LIST_HEAD(&tvnet->ep2h_empty_list);
 	spin_lock_init(&tvnet->ep2h_empty_lock);
-	
+
 	ret = pci_alloc_irq_vectors(pdev, 2, 2, PCI_IRQ_MSIX |
 				    PCI_IRQ_AFFINITY);
 	if (ret <= 0) {
@@ -871,7 +879,22 @@ fail:
 
 static void tvnet_host_remove(struct pci_dev *pdev)
 {
+	int ret = -1;
 	struct tvnet_priv *tvnet = pci_get_drvdata(pdev);
+
+	if (tvnet->rx_link_state == DIR_LINK_STATE_UP)
+		tvnet_host_user_link_down_req(tvnet);
+
+	ret = wait_event_interruptible_timeout(tvnet->link_state_wq,
+					       (tvnet->rx_link_state ==
+						DIR_LINK_STATE_DOWN),
+						msecs_to_jiffies(LINK_TIMEOUT));
+	ret = (ret > 0) ? 0 : -ETIMEDOUT;
+	if (ret < 0) {
+		pr_err("%s: failed: tx_state: %d rx_state: %d err: %d", __func__,
+		       tvnet->tx_link_state, tvnet->rx_link_state, ret);
+		tvnet->rx_link_state = DIR_LINK_STATE_UP;
+	}
 
 	free_irq(pci_irq_vector(pdev, 0), tvnet->ndev);
 	free_irq(pci_irq_vector(pdev, 1), tvnet->ndev);
