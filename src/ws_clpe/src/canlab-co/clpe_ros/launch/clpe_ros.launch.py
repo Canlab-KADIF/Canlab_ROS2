@@ -29,49 +29,49 @@ EXTRINSICS_DEFAULT (= DEFAULT with depth of 1 and transient local durability).
 '''
 parameters = {
   "cam_0_enable": True,
-  "cam_0_frame_id": "cam_0_link",
+  "cam_0_frame_id": "base_cam_0",
   "cam_0_image_qos": "SENSOR_DATA",
   "cam_0_info_qos": "SYSTEM_DEFAULT",
   "cam_0_pose": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
 
   "cam_1_enable": True,
-  "cam_1_frame_id": "cam_1_link",
+  "cam_1_frame_id": "base_cam_1",
   "cam_1_image_qos": "SENSOR_DATA",
   "cam_1_info_qos": "SYSTEM_DEFAULT",
   "cam_1_pose": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
 
   "cam_2_enable": True,
-  "cam_2_frame_id": "cam_2_link",
+  "cam_2_frame_id": "base_cam_2",
   "cam_2_image_qos": "SENSOR_DATA",
   "cam_2_info_qos": "SYSTEM_DEFAULT",
   "cam_2_pose": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
   
   "cam_3_enable": True,
-  "cam_3_frame_id": "cam_3_link",
+  "cam_3_frame_id": "base_cam_3",
   "cam_3_image_qos": "SENSOR_DATA",
   "cam_3_info_qos": "SYSTEM_DEFAULT",
   "cam_3_pose": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
   
   "cam_4_enable": True,
-  "cam_4_frame_id": "cam_4_link",
+  "cam_4_frame_id": "base_cam_4",
   "cam_4_image_qos": "SENSOR_DATA",
   "cam_4_info_qos": "SYSTEM_DEFAULT",
   "cam_4_pose": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
   
   "cam_5_enable": True,
-  "cam_5_frame_id": "cam_5_link",
+  "cam_5_frame_id": "base_cam_5",
   "cam_5_image_qos": "SENSOR_DATA",
   "cam_5_info_qos": "SYSTEM_DEFAULT",
   "cam_5_pose": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
   
   "cam_6_enable": True,
-  "cam_6_frame_id": "cam_6_link",
+  "cam_6_frame_id": "base_cam_6",
   "cam_6_image_qos": "SENSOR_DATA",
   "cam_6_info_qos": "SYSTEM_DEFAULT",
   "cam_6_pose": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
   
   "cam_7_enable": True,
-  "cam_7_frame_id": "cam_7_link",
+  "cam_7_frame_id": "base_cam_7",
   "cam_7_image_qos": "SENSOR_DATA",
   "cam_7_info_qos": "SYSTEM_DEFAULT",
   "cam_7_pose": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
