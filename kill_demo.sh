@@ -4,6 +4,7 @@ PASSWD='1'
 
 if [ `whoami` == "root" ]; then
 	killall -2 clpe_ros
+	killall -2 trigger_topic_pub
 	#killall -2 nodelet
 	bag=`ps -aux | grep "ros2 bag" | grep -v "color=auto"`
 	if [ $? == 0 ]; then
@@ -15,6 +16,7 @@ if [ `whoami` == "root" ]; then
 	#fi
 else
 	echo ${PASSWD} | sudo -S killall -2 clpe_ros
+	echo ${PASSWD} | sudo -S killall -2 trigger_topic_pub
 	#echo ${PASSWD} | sudo -S killall -2 nodelet
 	bag=`ps -aux | grep "ros2 bag" | grep -v "color=auto"`
 	if [ $? == 0 ]; then
