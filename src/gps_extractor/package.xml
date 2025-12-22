@@ -11,7 +11,8 @@
 
   <depend>rclcpp</depend>
   <depend>sqlite3</depend>
-  <depend>novatel_oem7_msgs</depend>
+  <depend>tf2_msgs</depend>
+  <depend>geometry_msgs</depend>
   <depend>rosidl_runtime_cpp</depend>
 
   <test_depend>ament_lint_auto</test_depend>

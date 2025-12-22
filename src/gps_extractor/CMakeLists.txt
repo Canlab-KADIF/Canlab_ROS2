@@ -8,7 +8,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # 패키지 종속성
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
-find_package(novatel_oem7_msgs REQUIRED)
+find_package(tf2_msgs REQUIRED)
+find_package(geometry_msgs REQUIRED)
 find_package(SQLite3 REQUIRED)
 find_package(rosidl_runtime_cpp REQUIRED)
 
@@ -18,7 +19,8 @@ add_executable(extractor src/extractor.cpp)
 # 라이브러리 링크
 ament_target_dependencies(extractor
   rclcpp
-  novatel_oem7_msgs
+  tf2_msgs
+  geometry_msgs
   SQLite3
   rosidl_runtime_cpp
 )
